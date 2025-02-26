@@ -6,7 +6,7 @@ export const authentication = async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       message: "email, and password are required",
     });
@@ -18,7 +18,7 @@ export const authentication = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      res.status(404).json({
+      return res.status(404).json({
         isVerified: false,
         message: "User not found",
       });
@@ -29,7 +29,7 @@ export const authentication = async (req, res) => {
     const isMatch = encryptedPassword === user.password;
 
     if (!isMatch) {
-      res.status(400).json({
+      return res.status(400).json({
         isVerified: false,
         message: "Invalid credentials",
       });
@@ -41,14 +41,14 @@ export const authentication = async (req, res) => {
       email: user.email,
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       isVerified: true,
       jwtToken: token,
       message: "Authenticated",
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({
+    return res.status(500).json({
       isVerified: false,
       message: "Internal server error",
       error,
