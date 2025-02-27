@@ -6,6 +6,7 @@ import taskRoutes from "./routes/taskRoutes.js";
 import { handleUnsupportedMethods } from "./middlewares/handleUnsupportedMethods.js";
 import { handleBadRoutes } from "./middlewares/handleBadRoutes.js";
 import { addResponseMetadata } from "./middlewares/responseMiddleware.js";
+import { connectDB } from "./config/db.js";
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use("/v1", userRoutes);
 app.use("/v1", taskRoutes);
 
 app.get("/test", async (req, res) => {
+  await connectDB();
   res.status(200).json({ message: "This is test APIs working...", statusCode: 200 });
 });
 
