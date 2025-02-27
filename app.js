@@ -17,9 +17,13 @@ app.use(addResponseMetadata);
 app.use("/v1", userRoutes);
 app.use("/v1", taskRoutes);
 
+app.get("/test", async (req, res) => {
+  res.status(200).json({ message: "This is test APIs working...", statusCode: 200 });
+});
+
 app.get("/", async (req, res) => {
   res.locals.data = {
-    message: "Bad request"
+    message: "Bad request",
   };
   res.status(400).json(res.locals.data);
 });
