@@ -5,8 +5,11 @@ import taskRoutes from "./routes/taskRoutes.js";
 import { handleUnsupportedMethods } from "./middlewares/handleUnsupportedMethods.js";
 import { handleBadRoutes } from "./middlewares/handleBadRoutes.js";
 import { addResponseMetadata } from "./middlewares/responseMiddleware.js";
+import { connectDB } from "./config/db.js";
 
 const app = express();
+
+connectDB();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
