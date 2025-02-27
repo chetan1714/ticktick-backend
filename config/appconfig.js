@@ -8,7 +8,7 @@ const appconfig = {
     env: process.env.NODE_ENV || "development",
   },
   db: {
-    uri: process.env.DB_URI || "mongodb+srv://chetamn33:Chetan64@cluster0.uglhz.mongodb.net/ticktick?retryWrites=true&w=majority&appName=Cluster0",
+    MONGODB_URI: process.env.MONGODB_URI || "mongodb+srv://chetamn33:Chetan64@cluster0.uglhz.mongodb.net/ticktick?retryWrites=true&w=majority&appName=Cluster0",
     logging: true,
   },
   winiston: {

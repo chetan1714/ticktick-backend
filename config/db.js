@@ -1,11 +1,14 @@
 import mongoose from "mongoose";
 import config from "./appconfig.js";
 
-const dbURI = config.db.uri;
+const dbURI = config.db.MONGODB_URI;
 
 async function connectDB() {
   try {
-    await mongoose.connect(dbURI);
+    await mongoose.connect(dbURI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
     console.info("Connected to MongoDB with Mongoose");
   } catch (err) {
     console.error("Failed to connect to MongoDB with Mongoose", err);

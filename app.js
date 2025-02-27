@@ -19,7 +19,9 @@ app.use("/v1", userRoutes);
 app.use("/v1", taskRoutes);
 
 app.get("/test", async (req, res) => {
-  await connectDB();
+  await connectDB().then(() => {
+    console.log("Connected to MongoDB");
+  });
   res.status(200).json({ message: "This is test APIs working...", statusCode: 200 });
 });
 
