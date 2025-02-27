@@ -1,5 +1,5 @@
 import User from "../models/user.js";
-import { connectDB, closeDB } from "../config/db.js";
+import { connectDB } from "../config/db.js";
 import { encryptPassword, generateJWTToken } from "../utils/utils.js";
 
 export const authentication = async (req, res) => {
@@ -53,8 +53,6 @@ export const authentication = async (req, res) => {
       message: "Internal server error",
       error,
     });
-  } finally {
-    await closeDB();
   }
 };
 
@@ -98,8 +96,6 @@ export const signup = async (req, res) => {
       message: "Internal server error",
       error,
     });
-  } finally {
-    await closeDB();
   }
 };
 
@@ -126,7 +122,5 @@ export const updatePassword = async (req, res) => {
       success: false,
       message: "Internal server error",
     };
-  } finally {
-    await closeDB();
   }
 };

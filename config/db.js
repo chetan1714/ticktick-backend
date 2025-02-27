@@ -3,24 +3,26 @@ import config from "./appconfig.js";
 
 const dbURI = config.db.MONGODB_URI;
 
+let isConnected = false; 
+
 async function connectDB() {
+  if (isConnected) {
+    console.info("✅ Using existing MongoDB connection.");
+    return;
+  }
+
   try {
-    await mongoose.connect(dbURI);
-    console.info("Connected to MongoDB with Mongoose");
+    const db = await mongoose.connect(dbURI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+
+    isConnected = db.connections[0].readyState === 1;
+    console.info("✅ Connected to MongoDB with Mongoose");
   } catch (err) {
-    console.error("Failed to connect to MongoDB with Mongoose", err);
+    console.error("❌ Failed to connect to MongoDB", err);
     process.exit(1);
   }
 }
 
-async function closeDB() {
-  try {
-    await mongoose.connection.close();
-    console.info("Disconnected from MongoDB with Mongoose");
-  } catch (err) {
-    console.error("Failed to disconnect from MongoDB with Mongoose", err);
-    process.exit(1);
-  }
-}
-
-export { connectDB, closeDB };
+export { connectDB };
