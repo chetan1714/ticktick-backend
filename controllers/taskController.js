@@ -8,6 +8,12 @@ export const createTask = async (req, res) => {
 
     const { title, description, completed } = req.body;
 
+    if (!title || !description || completed === undefined) {
+      return res.status(400).json({
+        message: "title, description and completed are required",
+      });
+    }
+
     const newTask = new Task({
       user: new mongoose.Types.ObjectId(req.user._id), 
       title,
