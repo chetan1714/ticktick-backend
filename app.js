@@ -1,12 +1,10 @@
 import express from "express";
-import json from "body-parser";
 import config from "./config/appconfig.js";
 import userRoutes from "./routes/userRoutes.js";
 import taskRoutes from "./routes/taskRoutes.js";
 import { handleUnsupportedMethods } from "./middlewares/handleUnsupportedMethods.js";
 import { handleBadRoutes } from "./middlewares/handleBadRoutes.js";
 import { addResponseMetadata } from "./middlewares/responseMiddleware.js";
-import { connectDB } from "./config/db.js";
 
 const app = express();
 
@@ -19,10 +17,9 @@ app.use("/v1", userRoutes);
 app.use("/v1", taskRoutes);
 
 app.get("/test", async (req, res) => {
-  await connectDB().then(() => {
-    console.log("Connected to MongoDB");
-  });
-  res.status(200).json({ message: "This is test APIs working...", statusCode: 200 });
+  res
+    .status(200)
+    .json({ message: "This is test APIs working...", statusCode: 200 });
 });
 
 app.get("/", async (req, res) => {

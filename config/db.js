@@ -5,10 +5,7 @@ const dbURI = config.db.MONGODB_URI;
 
 async function connectDB() {
   try {
-    await mongoose.connect(dbURI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(dbURI);
     console.info("Connected to MongoDB with Mongoose");
   } catch (err) {
     console.error("Failed to connect to MongoDB with Mongoose", err);
