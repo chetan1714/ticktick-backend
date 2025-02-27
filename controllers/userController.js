@@ -8,7 +8,7 @@ export const authentication = async (req, res) => {
   if (!email || !password) {
     return res.status(400).json({
       success: false,
-      message: "email, and password are required",
+      message: "email and password are required",
     });
   }
 
@@ -59,10 +59,12 @@ export const authentication = async (req, res) => {
 };
 
 export const signup = async (req, res) => {
+  const { name, email, password } = req.body;
+
   if (!name || !email || !password) {
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
-      message: "Name, email, and password are required",
+      message: "Name, email and password are required",
     });
   }
 
@@ -71,7 +73,7 @@ export const signup = async (req, res) => {
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         message: "User already exists",
       });
@@ -85,13 +87,13 @@ export const signup = async (req, res) => {
 
     await newUser.save();
 
-    res.status(201).json({
+    return res.status(201).json({
       success: true,
       message: "User created successfully",
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Internal server error",
       error,
